@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*Write a program to sort an array of numbers and then print them back on the console. 
+ The numbers should be entered from the console on a single line, separated by a space. */
+
 namespace _01SortArray
 {
     class Program

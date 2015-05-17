@@ -1,0 +1,5 @@
+D:\SOFTWARE UNI\Visual Studio 2013\Projects\PongGame\PongGame\bin\Debug\PongGame.exe.config
+D:\SOFTWARE UNI\Visual Studio 2013\Projects\PongGame\PongGame\bin\Debug\PongGame.exe
+D:\SOFTWARE UNI\Visual Studio 2013\Projects\PongGame\PongGame\bin\Debug\PongGame.pdb
+D:\SOFTWARE UNI\Visual Studio 2013\Projects\PongGame\PongGame\obj\Debug\PongGame.exe
+D:\SOFTWARE UNI\Visual Studio 2013\Projects\PongGame\PongGame\obj\Debug\PongGame.pdb

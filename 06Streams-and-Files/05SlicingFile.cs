@@ -34,16 +34,20 @@ namespace _05SlicingFile
                     files.Add(fileName);
                     FileStream outputFile = new FileStream(fileName, FileMode.Create, FileAccess.Write);
 
-                    using (outputFile)
+                    int byteCounter = 0;
+                    while (byteCounter <= SizeofEachFile)
                     {
-
-                        int bytesRead = 0;
-                        byte[] buffer = new byte[SizeofEachFile];
-
-                        if ((bytesRead = originFile.Read(buffer, 0, SizeofEachFile)) > 0)
+                        using (outputFile)
                         {
-                            outputFile.Write(buffer, 0, bytesRead);
+                            byte[] buffer = new byte[4096];
+                            while (true)
+                            {
+                                int readedByte = originFile.Read(buffer, 0, buffer.Length);
+                                if (readedByte == 0) break;
+                                outputFile.Write(buffer, 0, readedByte);
+                            }
                         }
+                        byteCounter++;
                     }
                 }
             }

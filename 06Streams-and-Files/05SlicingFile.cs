@@ -1,10 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace _05SlicingFile
 {
     class Program
@@ -18,40 +14,40 @@ namespace _05SlicingFile
             numberofParts = 2;
             sourceFile = @"../../../pic.jpg";
             string folderPath = @"../../../";
-            Slice( sourceFile, numberofParts);
-            Assemble(files,folderPath);
+            Slice(sourceFile, numberofParts);
+            Assemble(files, folderPath);
         }
 
         public static void Slice(string SourceFile, int nFiles)
         {
-           FileStream originFile = new FileStream(SourceFile, FileMode.Open, FileAccess.Read);
-                using(originFile)
-	            {
-                    int SizeofEachFile = (int)Math.Ceiling((double)originFile.Length / nFiles);
-                    
-                    for (int i = 0; i < nFiles; i++)
+            FileStream originFile = new FileStream(SourceFile, FileMode.Open, FileAccess.Read);
+            using (originFile)
+            {
+                int SizeofEachFile = (int)Math.Ceiling((double)originFile.Length / nFiles);
+
+                for (int i = 0; i < nFiles; i++)
+                {
+                    string baseFileName = Path.GetFileNameWithoutExtension(SourceFile);
+                    string Extension = Path.GetExtension(SourceFile);
+
+                    string fileName = Path.GetDirectoryName(SourceFile) + "\\" + baseFileName + i + Extension;
+                    files.Add(fileName);
+                    FileStream outputFile = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+
+                    using (outputFile)
                     {
-                        string baseFileName = Path.GetFileNameWithoutExtension(SourceFile);
-                        string Extension = Path.GetExtension(SourceFile);
 
-                        string fileName = Path.GetDirectoryName(SourceFile) + "\\" + baseFileName + i + Extension;
-                        files.Add(fileName);
-                        FileStream outputFile = new FileStream(fileName, FileMode.Create, FileAccess.Write);
-                        
-                        using(outputFile)
+                        int bytesRead = 0;
+                        byte[] buffer = new byte[SizeofEachFile];
+
+                        if ((bytesRead = originFile.Read(buffer, 0, SizeofEachFile)) > 0)
                         {
-
-                            int bytesRead = 0;
-                            byte[] buffer = new byte[SizeofEachFile];
-
-                            if ((bytesRead = originFile.Read(buffer, 0, SizeofEachFile)) > 0)
-                            {
-                                outputFile.Write(buffer, 0, bytesRead);
-                            }
+                            outputFile.Write(buffer, 0, bytesRead);
                         }
                     }
                 }
             }
+        }
         private static void Assemble(List<string> files, string destinationDirectory)
         {
             for (int i = 0; i < numberofParts; i++)

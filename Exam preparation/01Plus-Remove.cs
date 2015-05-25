@@ -1,101 +1,65 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 class Program
 {
     static void Main()
     {
-        List<List<char>> matrix = new List<List<char>>(); 
-
-        FillTheMatrix(matrix);
-
-        bool[][] availablePluses = new bool[matrix.Count][];
-
-        FillAvailablePlusesMatrix(matrix, availablePluses);
-
-        RepleacePlusesWithSpaces(matrix, availablePluses);
-
-        PrintResultMatrix(matrix);
-    }
-
-    private static void PrintResultMatrix(List<List<char>> matrix)
-    {
-        foreach (var row in matrix)
+        string line = Console.ReadLine();
+        List<string> matrixOriginal = new List<string>();
+        int maxLineLenght = 0;
+        //fill array
+        while (line != "END")
         {
-            foreach (var col in row)
+            matrixOriginal.Add(line);
+            if (line.Length > maxLineLenght)
             {
-                if (col != ' ')
+                maxLineLenght = line.Length;
+            }
+            line = Console.ReadLine();
+        }
+
+        List<char[]> matrixForRemove = new List<char[]>();
+        List<char[]> matrixForCheck = new List<char[]>();
+
+        //fill two matrix with equal lenght=maxLineLenght -> one for check and onother for remove
+        for (int i = 0; i < matrixOriginal.Count; i++)
+        {
+            char[] temp = (matrixOriginal[i] + new string(' ', maxLineLenght - matrixOriginal[i].Length)).ToArray();
+            char[] temp1 = (matrixOriginal[i].ToLower() + new string(' ', maxLineLenght - matrixOriginal[i].Length)).ToArray();
+
+            matrixForRemove.Add(temp);
+            matrixForCheck.Add(temp1);
+        }
+
+        //remove "+"es
+        for (int row = 1; row < matrixForRemove.Count - 1; row++)
+        {
+            for (int col = 1; col < maxLineLenght - 1; col++)
+            {
+
+                if (matrixForCheck[row][col] == matrixForCheck[row - 1][col] &&
+                    matrixForCheck[row][col] == matrixForCheck[row + 1][col] &&
+                    matrixForCheck[row][col] == matrixForCheck[row][col + 1] &&
+                    matrixForCheck[row][col] == matrixForCheck[row][col + 1])
                 {
-                    Console.Write(col);
+                    matrixForRemove[row][col] = '\0';
+                    matrixForRemove[row - 1][col] = '\0';
+                    matrixForRemove[row + 1][col] = '\0';
+                    matrixForRemove[row][col + 1] = '\0';
+                    matrixForRemove[row][col -1] = '\0';
                 }
             }
-            Console.WriteLine();
         }
-    }
-
-    private static void RepleacePlusesWithSpaces(List<List<char>> matrix, bool[][] availablePluses)
-    {
-        for (int row = 0; row < availablePluses.Length; row++)
+        foreach (var item in matrixForRemove)
         {
-            for (int col = 0; col < availablePluses[row].Length; col++)
+            foreach (var item1 in item)
             {
-                if (availablePluses[row][col])
+                if (item1 != '\0')
                 {
-                    matrix[row][col] = ' ';
-                    matrix[row][col - 1] = ' ';
-                    matrix[row][col + 1] = ' ';
-                    matrix[row - 1][col] = ' ';
-                    matrix[row + 1][col] = ' ';
+                    Console.Write(item1);
                 }
-            }
+            } Console.WriteLine();
         }
-    }
-
-    private static void FillAvailablePlusesMatrix(List<List<char>> matrix, bool[][] availablePluses)
-    {
-        for (int row = 0; row < matrix.Count; row++)
-        {
-            int lenghtRow = matrix[row].Count;
-            availablePluses[row] = new bool[lenghtRow];
-            for (int col = 0; col < lenghtRow; col++)
-            {
-                availablePluses[row][col] = IfFormedPluse(matrix, row, col);
-            }
-        }
-    }
-
-    private static void FillTheMatrix(List<List<char>> matrix)
-    {
-        while (true)
-        {
-            string inputLine = Console.ReadLine();
-            if (inputLine == "END")
-            {
-                break;
-            }
-            List<char> line = inputLine.ToLower().ToList();
-            matrix.Add(line);
-        }
-    }
-
-    private static bool IfFormedPluse(List<List<char>> matrix, int row, int col)
-    {
-        if (row < 1 ||
-            row > matrix.Count - 2 ||
-            col < 1 ||
-            col > matrix[row].Count - 2)
-        {
-            return false;
-        }
-        char current = matrix[row][col];
-
-        if (current == matrix[row][col - 1] &&
-            current == matrix[row][col + 1] &&
-            current == matrix[row - 1][col] &&
-            current == matrix[row + 1][col])
-        {
-            return true;
-        }
-        return false;
     }
 }

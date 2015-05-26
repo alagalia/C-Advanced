@@ -41,7 +41,7 @@ class Program
                 if (matrixForCheck[row][col] == matrixForCheck[row - 1][col] &&
                     matrixForCheck[row][col] == matrixForCheck[row + 1][col] &&
                     matrixForCheck[row][col] == matrixForCheck[row][col + 1] &&
-                    matrixForCheck[row][col] == matrixForCheck[row][col + 1])
+                    matrixForCheck[row][col] == matrixForCheck[row][col - 1])
                 {
                     matrixForRemove[row][col] = '\0';
                     matrixForRemove[row - 1][col] = '\0';

@@ -14,9 +14,9 @@ class TextGravity
 
         for (int i = 0; i < row; i++)
         {
-                for (int r= row-1; r > 0; r--)
+            for (int r= row-1; r > 0; r--)
             {
-                for (int c = col-1; c >= 0; c--)
+            	for (int c = col-1; c >= 0; c--)
                 {
                     if (matrix[r,c]==' ' )
                     {
@@ -24,6 +24,7 @@ class TextGravity
                         matrix[r - 1, c] = ' ';
                     }
                 }
+            	
             }
         }
         NewPrint(matrix);

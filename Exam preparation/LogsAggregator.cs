@@ -1,18 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LogsAggregator
 {
     class LogsAggregator
     {
-        static void Main(string[] args)
+        static void Main()
         {
             int n = int.Parse(Console.ReadLine());
             SortedDictionary<string, User> infoByUserName = new SortedDictionary<string, User>();
-
 
             for (int i = 0; i < n; i++)
             {
@@ -26,7 +22,7 @@ namespace LogsAggregator
                 if (!infoByUserName.ContainsKey(name))
                 {
                     infoByUserName[name] = new User();
-                    infoByUserName[name].Ip = new List<string>();
+                    infoByUserName[name].Ip = new SortedSet<string>();
                     infoByUserName[name].Duration = 0;
                 }
 
@@ -37,6 +33,14 @@ namespace LogsAggregator
                 infoByUserName[name].Duration += duration;
 
             }
+
+            foreach (var name in infoByUserName)
+            {
+                Console.Write(name.Key+": "); //имената
+                Console.Write(name.Value.Duration+" ["); //потреблението на всеки юзър - общо
+                string allIPAdress = string.Join(", ", name.Value.Ip);//IP адресите
+                Console.WriteLine(allIPAdress+"]");
+            }
         }
     }
 
@@ -45,7 +49,7 @@ namespace LogsAggregator
 
         public int Duration { get; set; }
 
-        public List<string> Ip { get; set; }
+        public SortedSet<string> Ip { get; set; }
 
     }
 }

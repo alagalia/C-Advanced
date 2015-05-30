@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,6 +40,21 @@ namespace Orders
                 {
                     allInfo[product][coustumer] += amount; ;
                 }
+            }
+
+            foreach (var product in allInfo)// Всеки продукт 
+            {
+                Console.Write("{0}: ",product.Key);
+
+                List<string> list = new List<string>();
+
+                foreach (var coustum in product.Value) // Всеки човек
+                {
+                    string coustomerAmount = coustum.Key + " " + coustum.Value;
+                    list.Add(coustomerAmount);
+                }
+                Console.Write(string.Join(", ",list));
+                Console.WriteLine();
             }
         }
     }

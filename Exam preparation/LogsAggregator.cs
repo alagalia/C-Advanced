@@ -11,7 +11,8 @@ namespace LogsAggregator
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
-            Dictionary<string, User> infoByUserName = new Dictionary<string, User>();
+            SortedDictionary<string, User> infoByUserName = new SortedDictionary<string, User>();
+
 
             for (int i = 0; i < n; i++)
             {
